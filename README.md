@@ -138,8 +138,8 @@ levels(FactorAgeDat1)
 write.csv(AgeDat1, "AgeDat1.csv", row.names = FALSE)
 AgeDat1 = read.csv("AgeDat1.csv", header = TRUE, na.strings = c(""))
 AgeDat1 = as.data.frame(AgeDat1)
-AgeDat1[170,]
-AgeDat1 = as.data.frame(AgeDat1[-c(170),])
+AgeDat1[97,]
+AgeDat1 = as.data.frame(AgeDat1[-c(97),])
 AgeDat1 = apply(AgeDat1,2, function(x){ifelse(x <=30, "30 or younger", ifelse(x <= 40, "31 to 40 years old", ifelse(x <= 50, "41 to 50 years old", ifelse(x <= 80, "51 or older", x))))})
 colnames(AgeDat1) = c("Age")
 AgeCount =count(AgeDat1, 'Age'); head(AgeCount)
