@@ -6,15 +6,15 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-There are a total of 494 recorded resposnes.  After getting rid of missing data for the given demographics below, there were 241.
+There are a total of 494 recorded resposnes.  After getting rid of missing data for the given demographics below, there were 209.
 
 Just getting the data.  
 ```{r}
 #setwd("~/Google Drive/PARCS/Projects/Ethics/Data")
 #dat = as.data.frame(read.csv("EthicsStudy.csv", header = TRUE))
-dat1 = cbind( dat[c("Finished")], dat[c("Q8")], dat[c("Q16")], dat[c("Q18")],dat[c("Q9")], dat[c("Q12")], dat[c("Q7")], dat[c("Q10")], dat[c("Q17")], dat[c("Q21")], dat[c("Q20")], dat[c("Q14")], dat[c("Q23")])
+dat1 = cbind( dat[c("Finished")], dat[c("Q8")], dat[c("Q16")], dat[c("Q18")],dat[c("Q9")], dat[c("Q12")], dat[c("Q7")], dat[c("Q10")], dat[c("Q17")], dat[c("Q21")], dat[c("Q20")])
 head(dat1)
-colnames(dat1) = c("Finished", "Edu", "State", "WorkSetting", "YearsExper", "Gender", "Age", "Eth", "EthDilem", "Training", "Q1", "Q2", "Q3")
+colnames(dat1) = c("Finished", "Edu", "State", "WorkSetting", "YearsExper", "Gender", "Age", "Eth", "EthDilem", "Training", "Q20")
 dat1 = dat1[-c(1:2),]
 head(dat1)
 dat1 = as.data.frame(na.omit(dat1))
@@ -138,8 +138,7 @@ levels(FactorAgeDat1)
 write.csv(AgeDat1, "AgeDat1.csv", row.names = FALSE)
 AgeDat1 = read.csv("AgeDat1.csv", header = TRUE, na.strings = c(""))
 AgeDat1 = as.data.frame(AgeDat1)
-AgeDat1[97,]
-#AgeDat1 = as.data.frame(AgeDat1[-c(97),])
+AgeDat1 = as.data.frame(AgeDat1[-c(84),])
 AgeDat1 = apply(AgeDat1,2, function(x){ifelse(x <=30, "30 or younger", ifelse(x <= 40, "31 to 40 years old", ifelse(x <= 50, "41 to 50 years old", ifelse(x <= 80, "51 or older", x))))})
 colnames(AgeDat1) = c("Age")
 AgeCount =count(AgeDat1, 'Age'); head(AgeCount)
