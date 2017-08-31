@@ -6,7 +6,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-There are a total of 494 recorded resposnes.
+There are a total of 494 recorded resposnes.  After getting rid of missing data for the given demographics below, there were 241.
 
 Just getting the data.  
 ```{r}
@@ -14,10 +14,15 @@ Just getting the data.
 #dat = as.data.frame(read.csv("EthicsStudy.csv", header = TRUE))
 dat1 = cbind( dat[c("Finished")], dat[c("Q8")], dat[c("Q16")], dat[c("Q18")],dat[c("Q9")], dat[c("Q12")], dat[c("Q7")], dat[c("Q10")], dat[c("Q17")], dat[c("Q21")])
 head(dat1)
-colnames(dat1) = c("Finished", "Edu", "State", "WorkSetting", "YearsExper", "Gender", "Age", "Eth", "EthDilem", "Courses")
+colnames(dat1) = c("Finished", "Edu", "State", "WorkSetting", "YearsExper", "Gender", "Age", "Eth", "EthDilem", "Training")
 dat1 = dat1[-c(1:2),]
 head(dat1)
+dat1 = as.data.frame(na.omit(dat1))
+write.csv(dat1, "dat1.csv", row.names = FALSE)
+dat1 = read.csv("dat1.csv", header =TRUE, na.strings = c(""))
+dat1 = as.data.frame(na.omit(dat1))
 #dat1 = as.data.frame(subset(dat1, Finished == "True", select = Finished:Courses))
+
 dim(dat1)
 ```
 Now I need to get counts for Edu categories.  Grab the counts and then get the percentages. 
@@ -36,7 +41,9 @@ Need to clean State. missouri and North Carolina are problems
 library(plyr)
 EduCount =count(dat1, 'Edu'); EduCount
 n = sum(EduCount$freq)
+dat1$Edu
 EduCount$Per = round(EduCount$freq/n, 3)
+write.csv(EduCount, "EduCount.csv", row.names = FALSE)
 sum(EduCount$Per) # Check that it equals 1
 
 dat1 = as.data.frame(apply(dat1, 2, function(x){ifelse(x == "co", "Colorado", ifelse(x == "CO", "Colorado", ifelse(x == "CT", "Connecticut", ifelse(x == "in", "Indiana", ifelse(x == "IN", "Indiana", ifelse(x == "ky", "Kentucky", ifelse(x == "Ky", "Kentucky", ifelse(x == "KY", "Kentucky", ifelse(x == "lndiana", "Indiana", ifelse(x == "ma", "Massachusetts", ifelse(x == "Ma", "Massachusetts", ifelse(x == "maryland", "Maryland", ifelse(x =="Massachssets", "Massachusetts", ifelse(x == "Massachusetss", "Massachusetts", ifelse(x == "massachusetts", "Massachusetts", ifelse(x == "massachusetts", "Massachusetts", ifelse(x == "Massachusetts", "Massachusetts", ifelse(x == "missouri", "Missouri", ifelse(x == "MN" , "Minnesota", ifelse(x == "N.C", "North Carolina", ifelse(x == "NC", "North Carolina", ifelse(x == "new jersey", "New Jersey", ifelse(x == "New jersey", "New Jersey", ifelse(x == "nj", "New Jersey", ifelse(x == "Nj", "New Jersey", ifelse(x == "NJ", "New Jersey", ifelse(x == "north carolina", "North Carolina" , ifelse(x == "North Carolina ", "North Carolina", ifelse(x == " North Carolina", "North Carolina", x)))))))))))))))))))))))))))))}))
@@ -57,7 +64,7 @@ StateCount =count(StateDat1, 'State'); StateCount
 n = sum(StateCount$freq)
 
 StateCount$Per = round(StateCount$freq/n,3)
-StateCount
+write.csv(StateCount, "StateCount.csv", row.names = FALSE)
 
 sum(StateCount$Per) # Check that it equals 1
 
@@ -115,6 +122,7 @@ GenderCount =count(GenderDat1, 'Gender'); head(GenderCount)
 
 n = sum(GenderCount$freq)
 GenderCount$Per = round(GenderCount$freq/n, 3)
+write.csv(GenderCount, "GenderCount.csv", row.names = FALSE)
 GenderCount
 ```
 Age 
@@ -137,6 +145,7 @@ colnames(AgeDat1) = c("Age")
 AgeCount =count(AgeDat1, 'Age'); head(AgeCount)
 n = sum(AgeCount$freq)
 AgeCount$Per = round(AgeCount$freq/n, 3)
+write.csv(AgeCount, "AgeCount.csv", row.names = FALSE)
 AgeCount
 ```
 Ethnicity
@@ -173,16 +182,17 @@ EthDilemCount =count(EthDilemDat1, 'EthDilem'); head(EthDilemCount)
 
 n = sum(EthDilemCount$freq)
 EthDilemCount$Per = round(EthDilemCount$freq/n, 3)
+write.csv(EthDilemCount, "EthDilemCount.csv", row.names = FALSE)
 EthDilemCount
 ```
 Training
 ```{r}
-TrainingDat1 = dat1
+TrainingDat1 = as.data.frame(dat1$Training)
+colnames(TrainingDat1) = c("Training")
 write.csv(TrainingDat1, "TrainingDat1.csv", row.names = FALSE)
 TrainingDat1 = as.data.frame(read.csv("TrainingDat1.csv", header= TRUE, na.strings = c("")))
 TrainingDat1 = as.data.frame(TrainingDat1$Training)
 TrainingDat1 = as.data.frame(na.omit(TrainingDat1))
-TrainingDat1
 colnames(TrainingDat1) = c("Training")
 
 TrainingCount =count(TrainingDat1, 'Training'); head(TrainingCount)
