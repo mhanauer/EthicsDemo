@@ -77,7 +77,8 @@ WorkSettingDat1 = as.data.frame(WorkSettingDat1$WorkSetting)
 WorkSettingDat1 = as.data.frame(na.omit(WorkSettingDat1))
 
 colnames(WorkSettingDat1) = c("WorkSetting")
-WorkSettingDat1 = apply(WorkSettingDat1,2, function(x){ifelse(x == "College or University", "College or University", ifelse(x == "Preschool", "Preschool", ifelse(x == "K-12 School System" == "K-12", ifelse(x == "Elementary School", "Elementary School", ifelse(x == "Elementary School,High School", "K-12", ifelse(x == "Elementary School,Junior High/Middle School", ifelse(x == "Elementary School,Junior High/Middle School,High School,Other", "K-12", ifelse(x == "High School", "K-12", ifelse(x == "Junior High/Middle School", ifelse(x == "Junior High/Middle School,High School", "K-12", ifelse(x == "Junior High/Middle School,Other", "K-12", ifelse(x == "K-12 School System", "K-12", ifelse(x == "K-12", ifelse("School System,Elementary School", "K-12", ifelse(x == "K-12 School System,Elementary School,High School", "K-12", ifelse(x == "K-12 School System,Elementary School,Junior High/Middle School", "K-12", ifelse(x == "K-12 School System,Elementary School,Junior High/Middle School,High School", "K-12", ifelse(x == "K-12 School System,Elementary School,Special Education Cooperative", "K-12", ifelse(x == "K-12 School System,High School", "K-12", ifelse(x == "K-12 School System,High School", "K-12", ifelse(x == "K-12 School System,Junior High/Middle School,High School", "K-12", ifelse(x == "K-12 School System,Special Education Cooperative", "K-12", ifelse(x == "K-12 School System,Special Education Cooperative", "K-12", ifelse(x== "K-12 School System,Special Education Cooperative,Other", "K-12", ifelse(x == "Preschool", "Preschool", ifelse(x == "Preschool,Elementary School", "K-12", ifelse(x == "Preschool,Elementary School,High School", ifelse(x == "Preschool,Elementary School,Junior High/Middle School", "K-12", ifelse(x =="Preschool,Elementary School,Junior High/Middle School", "K-12", ifelse(x == "Preschool,Elementary School,Junior High/Middle School,High School", "K-12", ifelse(x == "Preschool,Elementary School,Junior High/Middle School,High School,Other", "K-12", ifelse(x == "Preschool,High School", "K-12", ifelse(x== "Preschool,K-12 School System", "K-12", ifelse(x == "Preschool,K-12 School System,Elementary School", "K-12", ifelse(x == "Preschool,K-12 School System,Elementary School,High School", "K-12", ifelse(x == "Preschool,K-12 School System,Elementary School,Junior High/Middle School", "K-12", x))))))))))))))))))))))))))))))))))))})
+WorkSettingDat1 = apply(WorkSettingDat1,2, function(x){ifelse(x == "College or University", "College or University", ifelse(x == "Preschool", "K-12", ifelse(x == "K-12 School System","K-12", ifelse(x == "Elementary School", "Elementary School", ifelse(x == "Elementary School,High School", "K-12", ifelse(x == "Elementary School,Junior High/Middle School", "K-12", ifelse(x == "Elementary School,Junior High/Middle School,High School,Other", "K-12", ifelse(x == "High School", "K-12", ifelse(x == "Junior High/Middle School", "K-12", ifelse(x == "Junior High/Middle School,High School", "K-12", ifelse(x == "Junior High/Middle School,Other", "K-12", ifelse(x == "K-12 School System", "K-12", ifelse(x =="School System,Elementary School", "K-12", ifelse(x == "K-12 School System,Elementary School,High School", "K-12", ifelse(x == "K-12 School System,Elementary School,Junior High/Middle School", "K-12", ifelse(x == "K-12 School System,Elementary School,Junior High/Middle School,High School", "K-12", ifelse(x == "K-12 School System,Elementary School,Special Education Cooperative", "K-12", ifelse(x == "K-12 School System,High School", "K-12", ifelse(x == "K-12 School System,High School", "K-12", ifelse(x == "K-12 School System,Junior High/Middle School,High School", "K-12", ifelse(x == "K-12 School System,Special Education Cooperative", "K-12", ifelse(x == "K-12 School System,Special Education Cooperative", "K-12", ifelse(x== "K-12 School System,Special Education Cooperative,Other", "K-12", ifelse(x == "Preschool", "Preschool", ifelse(x == "Preschool,Elementary School", "K-12", ifelse(x == "Preschool,Elementary School,High School", "K-12", ifelse(x == "Preschool,Elementary School,Junior High/Middle School", "K-12", ifelse(x =="Preschool,Elementary School,Junior High/Middle School", "K-12", ifelse(x == "Preschool,Elementary School,Junior High/Middle School,High School", "K-12", ifelse(x == "Preschool,Elementary School,Junior High/Middle School,High School,Other", "K-12", ifelse(x == "Preschool,High School", "K-12", ifelse(x== "Preschool,K-12 School System", "K-12", ifelse(x == "Preschool,K-12 School System,Elementary School", "K-12", ifelse(x == "Preschool,K-12 School System,Elementary School,High School", "K-12", ifelse(x == "Preschool,K-12 School System,Elementary School,Junior High/Middle School", "K-12", ifelse(x == "K-12 School System,Elementary School", "K-12", "Other"))))))))))))))))))))))))))))))))))))})
+
 
 WorkSettingCount =count(WorkSettingDat1, 'WorkSetting'); head(WorkSettingCount)
 n = sum(WorkSettingCount$freq)
@@ -182,6 +183,14 @@ write.csv(EthDilemCount, "EthDilemCount.csv", row.names = FALSE)
 EthDilemCount
 ```
 Training
+Need to create count for each of these categories and then a multilple category
+Three (3) or more graduate credit hours
+Law and ethics was integrated in multiple classes
+Law and ethics was discussed in a portion of one class
+Workshop or conference presentation
+No formal graduate training in law and ethics
+Other
+
 ```{r}
 TrainingDat1 = as.data.frame(dat1$Training)
 colnames(TrainingDat1) = c("Training")
@@ -190,10 +199,9 @@ TrainingDat1 = as.data.frame(read.csv("TrainingDat1.csv", header= TRUE, na.strin
 TrainingDat1 = as.data.frame(TrainingDat1$Training)
 TrainingDat1 = as.data.frame(na.omit(TrainingDat1))
 colnames(TrainingDat1) = c("Training")
-
+TrainingDat1 = apply(TrainingDat1, 2, function(x){ifelse(x == "Three (3) or more graduate credit hours
+", "Three (3) or more graduate credit hours", ifelse(x == "Law and ethics was integrated in multiple classes", "Law and ethics was integrated in multiple classes", ifelse(x == "Law and ethics was discussed in a portion of one class", "Law and ethics was discussed in a portion of one class", ifelse(x == "Workshop or conference presentation", "Workshop or conference presentation", ifelse(x == "Workshop or conference presentation", "Workshop or conference presentation", ifelse(x == "No formal graduate training in law and ethics", "No formal graduate training in law and ethics", ifelse(x == "Other", "Other", "Multiple training experiences")))))))})
 TrainingCount =count(TrainingDat1, 'Training'); head(TrainingCount)
-
-
 n = sum(TrainingCount$freq)
 TrainingCount$Per = round(TrainingCount$freq/n, 3)
 TrainingCount
@@ -201,16 +209,6 @@ write.csv(TrainingCount, "TrainingCount.csv", row.names = FALSE)
 ```
 Now cbinding everything into one data set
 ```{r}
-dim(EduCount)
-dim(StateCount)
-dim(WorkSettingCount)
-dim(YearsExperCount)
-dim(GenderCount)
-dim(AgeCount)
-dim(EthCount)
-dim(EthDilemCount)
-dim(TrainingCount)
-
 library(xlsx)
 write.xlsx(EduCount, file="EthicsAnswered.xlsx", sheetName="EduCount", row.names=FALSE)
 write.xlsx(StateCount, file="EthicsAnswered.xlsx", sheetName="StateCount", append=TRUE, row.names=FALSE)
